@@ -1,4 +1,4 @@
-export class Coordinates 
+export class HexCoordinates 
 {
     public get Q(): number
     {
@@ -26,12 +26,12 @@ export class Coordinates
     } 
 
     private static readonly neighborDirections: { q:number, r:number }[] = [
-        { q:1, r:0 },
-        { q:1, r:-1 },
-        { q:0, r:-1 },
-        { q:-1, r:0 },
-        { q:-1, r:1 },
-        { q:0, r:1 }
+        { q: 1, r: 0 },
+        { q: 1, r:-1 },
+        { q: 0, r:-1 },
+        { q:-1, r: 0 },
+        { q:-1, r: 1 },
+        { q: 0, r: 1 }
     ];
 
     private readonly q:number;
@@ -48,13 +48,13 @@ export class Coordinates
         return this.q + ", " + this.r;
     }
 
-    public IsEquals(coordinates: Coordinates): boolean
+    public IsEquals(coordinates: HexCoordinates): boolean
     {
         return this.Q == coordinates.Q &&
             this.R == coordinates.R;
     }
 
-    public IsNeighbor(coordinates: Coordinates): boolean
+    public IsNeighbor(coordinates: HexCoordinates): boolean
     {
         for (let neighborsDirection of this.GetNeighbors())
         {
@@ -67,15 +67,15 @@ export class Coordinates
         return false;
     }
 
-    public GetNeighbors(): Coordinates[]
+    public GetNeighbors(): HexCoordinates[]
     {
         return [
-            new Coordinates(this.q + Coordinates.neighborDirections[0].q, this.r + Coordinates.neighborDirections[0].r),
-            new Coordinates(this.q + Coordinates.neighborDirections[1].q, this.r + Coordinates.neighborDirections[1].r),
-            new Coordinates(this.q + Coordinates.neighborDirections[2].q, this.r + Coordinates.neighborDirections[2].r),
-            new Coordinates(this.q + Coordinates.neighborDirections[3].q, this.r + Coordinates.neighborDirections[3].r),
-            new Coordinates(this.q + Coordinates.neighborDirections[4].q, this.r + Coordinates.neighborDirections[4].r),
-            new Coordinates(this.q + Coordinates.neighborDirections[5].q, this.r + Coordinates.neighborDirections[5].r)
+            new HexCoordinates(this.q + HexCoordinates.neighborDirections[0].q, this.r + HexCoordinates.neighborDirections[0].r),
+            new HexCoordinates(this.q + HexCoordinates.neighborDirections[1].q, this.r + HexCoordinates.neighborDirections[1].r),
+            new HexCoordinates(this.q + HexCoordinates.neighborDirections[2].q, this.r + HexCoordinates.neighborDirections[2].r),
+            new HexCoordinates(this.q + HexCoordinates.neighborDirections[3].q, this.r + HexCoordinates.neighborDirections[3].r),
+            new HexCoordinates(this.q + HexCoordinates.neighborDirections[4].q, this.r + HexCoordinates.neighborDirections[4].r),
+            new HexCoordinates(this.q + HexCoordinates.neighborDirections[5].q, this.r + HexCoordinates.neighborDirections[5].r)
         ];
     }
 
@@ -86,9 +86,9 @@ export class Coordinates
         return { x: x, y: -y };
     }
 
-    public GetField(distance: number): Coordinates[]
+    public GetField(distance: number): HexCoordinates[]
     {
-        let tiles:Coordinates[] = [];
+        let tiles:HexCoordinates[] = [];
         tiles.push(this);
         for (let dx = -distance; dx <= distance; dx++)
         {
@@ -99,14 +99,14 @@ export class Coordinates
                     continue;
                 }
 
-                tiles.push(new Coordinates(this.X + dx, this.Y + dy));
+                tiles.push(new HexCoordinates(this.X + dx, this.Y + dy));
             }
         }
 
         return tiles;
     }
 
-    public GetDistance(coordinates: Coordinates)
+    public GetDistance(coordinates: HexCoordinates)
     {
         return Math.max(Math.abs(this.X - coordinates.X), Math.abs(this.Y - coordinates.Y), Math.abs(this.Z - coordinates.Z));
     }
